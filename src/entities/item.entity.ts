@@ -1,5 +1,6 @@
 import { ItemStatus } from "src/items/item-status.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { User } from "./user.entity";
 
 // typescriptでのモデルのようなもの
 @Entity()
@@ -24,4 +25,10 @@ export class Item {
 
     @Column()
     updatedAt: string;
+
+    @ManyToOne(() => User, (user) => user.items)
+    user: User;
+
+    @Column()
+    UserId: string;
 }
