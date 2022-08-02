@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, UseGuards } from '@nestjs/common';
 import { Item } from "../entities/item.entity";
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
+// items.moduleにAuthModuleをimportしてないと使えない
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('items')
 export class ItemsController {
@@ -23,16 +25,19 @@ export class ItemsController {
 
     // dtoのおかげで@Body('id') id: string,などとする必要がなくなる
     @Post()
+    @UseGuards(JwtAuthGuard)
     async create(@Body() CreateItemDto: CreateItemDto): Promise<Item> {
         return await this.itemService.create(CreateItemDto);
     }
 
     @Patch(':id')
+    @UseGuards(JwtAuthGuard)
     async updateStatus(@Param('id', ParseUUIDPipe) id: string): Promise<Item> {
         return await this.itemService.updateStatus(id);
     }
 
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     async delete(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
         await this.itemService.delete(id);
     }

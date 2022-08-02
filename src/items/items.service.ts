@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ItemStatus } from './item-status.enum';
 import { Item } from "../entities/item.entity";
 import { CreateItemDto } from './dto/create-item.dto';
+// items.moduleにてitemRepositoryの接続をしているので使える
 import { ItemRepository } from './item.repository';
 
 @Injectable()
