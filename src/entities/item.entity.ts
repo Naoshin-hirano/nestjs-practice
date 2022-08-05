@@ -30,5 +30,5 @@ export class Item {
     user: User;
 
     @Column()
-    UserId: string;
+    userId: string;
 }
