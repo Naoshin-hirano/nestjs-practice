@@ -1,8 +1,8 @@
-import { Item } from "src/entities/item.entity";
+import { Item } from "../entities/item.entity";
 import { CreateItemDto } from "./dto/create-item.dto";
 import { EntityRepository, Repository } from "typeorm";
 import { ItemStatus } from "./item-status.enum";
-import { User } from "src/entities/user.entity";
+import { User } from "../entities/user.entity";
 
 // Itemエンティティ(モデル)とつなげる
 @EntityRepository(Item)
