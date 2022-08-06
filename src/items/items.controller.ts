@@ -6,6 +6,9 @@ import { CreateItemDto } from './dto/create-item.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { GetUser } from 'src/auth/decorator/get-user.decorate';
 import { User } from 'src/entities/user.entity';
+import { Role } from 'src/auth/decorator/role.decorator';
+import { UserStatus } from 'src/auth/user-status.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 // UseInterceptors: handlerがレスポンスを返す前にuser.entityでExcludeをつけたパスワードを除外してから最終的なレスポンスとしている
 @Controller('items')
@@ -30,7 +33,8 @@ export class ItemsController {
 
     // dtoのおかげで@Body('id') id: string,などとする必要がなくなる
     @Post()
-    @UseGuards(JwtAuthGuard)
+    @Role(UserStatus.PREMIUM)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     async create(
         @Body() CreateItemDto: CreateItemDto,
         @GetUser() user: User,
